@@ -3,23 +3,23 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class OnlineFoodService extends JFrame {
-    private JTextArea orderSummary;
-    private StringBuilder orderedItems = new StringBuilder();
-    private int totalPrice = 0;
-    private Menu menu;
+    public JTextArea orderSummary;
+    public StringBuilder orderedItems = new StringBuilder();
+    public int totalPrice = 0;
+    public Menu menu;
 
     public OnlineFoodService() {
-        
+
         JOptionPane.showMessageDialog(this, "Welcome to the Yummy Deshi Food!");
-        
+
         setTitle("Yummy Deshi Food Restaurant");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        menu = new Menu(); 
+        menu = new Menu();
 
-        
+
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         menuPanel.setBorder(BorderFactory.createTitledBorder("Menu"));
@@ -31,7 +31,7 @@ public class OnlineFoodService extends JFrame {
 
         add(new JScrollPane(menuPanel), BorderLayout.WEST);
 
-       
+
         JPanel orderPanel = new JPanel();
         orderPanel.setLayout(new BorderLayout());
         orderPanel.setBorder(BorderFactory.createTitledBorder("Your Order"));
@@ -41,7 +41,7 @@ public class OnlineFoodService extends JFrame {
         orderPanel.add(new JScrollPane(orderSummary), BorderLayout.CENTER);
         add(orderPanel, BorderLayout.CENTER);
 
-        
+
         JPanel buttonPanel = new JPanel();
         JButton finishOrderButton = new JButton("Finish Order");
         JButton clearOrderButton = new JButton("Clear Order");
@@ -54,7 +54,16 @@ public class OnlineFoodService extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void addMenuItems(JPanel menuPanel, String category, java.util.List<FoodName> items) {
+    public void finishOrderButtonAction() {
+        showCustomerDetails();
+    }
+
+    // Add this method
+    public void clearOrderButtonAction() {
+        clearOrder();
+    }
+
+    public void addMenuItems(JPanel menuPanel, String category, java.util.List<FoodName> items) {
         menuPanel.add(new JLabel(category + ":"));
         for (FoodName item : items) {
             JButton addButton = new JButton("Add");
@@ -66,24 +75,24 @@ public class OnlineFoodService extends JFrame {
         }
     }
 
-    private void addItemToOrder(FoodName item) {
+    public void addItemToOrder(FoodName item) {
         orderedItems.append(item.toString()).append("\n");
-        totalPrice += item.getPrice();  
-        updateOrderSummary();           
+        totalPrice += item.getPrice();
+        updateOrderSummary();
     }
 
-    private void updateOrderSummary() {
-        orderSummary.setText(orderedItems.toString()); 
-        orderSummary.append("\nTotal Price: Tk" + totalPrice + "\n");  
+    public void updateOrderSummary() {
+        orderSummary.setText(orderedItems.toString());
+        orderSummary.append("\nTotal Price: Tk" + totalPrice + "\n");
     }
 
-    private void clearOrder() {
+    public void clearOrder() {
         orderedItems.setLength(0);
-        totalPrice = 0;  
-        orderSummary.setText("");  
+        totalPrice = 0;
+        orderSummary.setText("");
     }
 
-    private void showCustomerDetails() {
+    public void showCustomerDetails() {
         JFrame customerDetailsFrame = new JFrame("Customer Details");
         customerDetailsFrame.setSize(300, 200);
         customerDetailsFrame.setLayout(new GridLayout(4, 2, 10, 10));
@@ -124,7 +133,24 @@ public class OnlineFoodService extends JFrame {
         });
     }
 
+    public String getOrderSummary() {
+        return orderSummary.getText();
+    }
+
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+
+    public Menu getMenu() {
+        return menu;
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new OnlineFoodService().setVisible(true));
     }
+
+
+
 }
