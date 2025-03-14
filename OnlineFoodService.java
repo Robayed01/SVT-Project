@@ -3,10 +3,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class OnlineFoodService extends JFrame {
-    public JTextArea orderSummary;
-    public StringBuilder orderedItems = new StringBuilder();
-    public int totalPrice = 0;
-    public Menu menu;
+    private JTextArea orderSummary;
+    private StringBuilder orderedItems = new StringBuilder();
+    private int totalPrice = 0;
+    private Menu menu;
 
     public OnlineFoodService() {
 
@@ -17,12 +17,14 @@ public class OnlineFoodService extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+
         menu = new Menu();
 
 
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         menuPanel.setBorder(BorderFactory.createTitledBorder("Menu"));
+        menuPanel.setBackground(Color.decode("#A1D6B2"));
 
         addMenuItems(menuPanel, "Biriyani", menu.getBiriyanis());
         addMenuItems(menuPanel, "Kebab", menu.getKebabs());
@@ -35,16 +37,20 @@ public class OnlineFoodService extends JFrame {
         JPanel orderPanel = new JPanel();
         orderPanel.setLayout(new BorderLayout());
         orderPanel.setBorder(BorderFactory.createTitledBorder("Your Order"));
+        orderPanel.setBackground(Color.decode("#E8B86D"));
 
         orderSummary = new JTextArea();
         orderSummary.setEditable(false);
+        orderSummary.setBackground(Color.decode("#F1F3C2"));
         orderPanel.add(new JScrollPane(orderSummary), BorderLayout.CENTER);
         add(orderPanel, BorderLayout.CENTER);
 
 
         JPanel buttonPanel = new JPanel();
         JButton finishOrderButton = new JButton("Finish Order");
+        finishOrderButton.setBackground(Color.decode("#CEDF9F"));
         JButton clearOrderButton = new JButton("Clear Order");
+        clearOrderButton.setBackground(Color.decode("#CEDF9F"));
 
         finishOrderButton.addActionListener(e -> showCustomerDetails());
         clearOrderButton.addActionListener(e -> clearOrder());
@@ -68,7 +74,10 @@ public class OnlineFoodService extends JFrame {
         for (FoodName item : items) {
             JButton addButton = new JButton("Add");
             addButton.addActionListener(e -> addItemToOrder(item));
+            addButton.setBackground(Color.decode("#CEDF9F"));
             JPanel itemPanel = new JPanel(new BorderLayout());
+            itemPanel.setBackground(Color.decode("#A1D6B2"));
+
             itemPanel.add(new JLabel("• " + item), BorderLayout.CENTER);
             itemPanel.add(addButton, BorderLayout.EAST);
             menuPanel.add(itemPanel);
@@ -96,6 +105,7 @@ public class OnlineFoodService extends JFrame {
         JFrame customerDetailsFrame = new JFrame("Customer Details");
         customerDetailsFrame.setSize(300, 200);
         customerDetailsFrame.setLayout(new GridLayout(4, 2, 10, 10));
+        customerDetailsFrame.getContentPane().setBackground(Color.decode("#A1D6B2"));
 
         JLabel nameLabel = new JLabel("Customer Name:");
         JTextField nameField = new JTextField();
@@ -107,6 +117,7 @@ public class OnlineFoodService extends JFrame {
         JTextField mobileField = new JTextField();
 
         JButton submitButton = new JButton("Finish Order");
+        submitButton.setBackground(Color.decode("#CEDF9F"));
 
         customerDetailsFrame.add(nameLabel);
         customerDetailsFrame.add(nameField);
@@ -137,12 +148,12 @@ public class OnlineFoodService extends JFrame {
         return orderSummary.getText();
     }
 
-
+    // Add this method
     public int getTotalPrice() {
         return totalPrice;
     }
 
-
+    // Add this method
     public Menu getMenu() {
         return menu;
     }
