@@ -61,10 +61,12 @@ public class OnlineFoodService extends JFrame {
     }
 
     public void finishOrderButtonAction() {
+        if (orderedItems.length() == 0) {
+            throw new IllegalArgumentException("Order is empty. Cannot finish an empty order.");
+        }
         showCustomerDetails();
     }
 
-    // Add this method
     public void clearOrderButtonAction() {
         clearOrder();
     }
@@ -102,6 +104,10 @@ public class OnlineFoodService extends JFrame {
     }
 
     public void showCustomerDetails() {
+
+        JOptionPane.showMessageDialog(this, "Your Order:\n" + orderedItems.toString() +
+                "\nTotal Price: Tk" + totalPrice, "Order Summary", JOptionPane.INFORMATION_MESSAGE);
+
         JFrame customerDetailsFrame = new JFrame("Customer Details");
         customerDetailsFrame.setSize(300, 200);
         customerDetailsFrame.setLayout(new GridLayout(4, 2, 10, 10));
@@ -137,7 +143,7 @@ public class OnlineFoodService extends JFrame {
 
             if (customerName.isEmpty() || customerAddress.isEmpty() || customermobileNum.isEmpty()) {
                 JOptionPane.showMessageDialog(customerDetailsFrame, "Please fill out all fields!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
+            }   else {
                 JOptionPane.showMessageDialog(this, "Thanks, " + customerName + "! Your order will be delivered to " + customerAddress + ".\nTotal: Tk" + totalPrice);
                 customerDetailsFrame.dispose();
             }
@@ -148,12 +154,10 @@ public class OnlineFoodService extends JFrame {
         return orderSummary.getText();
     }
 
-    // Add this method
     public int getTotalPrice() {
         return totalPrice;
     }
 
-    // Add this method
     public Menu getMenu() {
         return menu;
     }
