@@ -82,4 +82,31 @@ public class OnlineFoodServiceTest {
         assertNotNull(orderSummary);
         assertTrue(orderSummary.contains("Total Price: Tk160"));
     }
+
+    @Test
+    void MenuItemsAdditionTest() {
+        List<FoodName> biriyanis = onlineFoodService.getMenu().getBiriyanis();
+        assertNotNull(biriyanis);
+        assertFalse(biriyanis.isEmpty());
+    }
+
+    @Test
+    void FinishOrderButtonActionWithInvalidDataTest() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            onlineFoodService.finishOrderButtonAction();
+        });
+        try {
+            onlineFoodService.finishOrderButtonAction();
+            fail();
+        } catch (IllegalArgumentException e) {}
+
+
+    }
+
+    @Test
+    void ClearOrderButtonActionTest() {
+        assertDoesNotThrow(() -> {
+            onlineFoodService.clearOrderButtonAction();
+        });
+    }
 }
