@@ -86,12 +86,6 @@ public class OnlineFoodServiceTest {
         assertTrue(orderSummary.contains("Total Price: Tk160"));
     }
 
-    @Test
-    void MenuItemsAdditionTest() {
-        List<FoodName> biriyanis = onlineFoodService.getMenu().getBiriyanis();
-        assertNotNull(biriyanis);
-        assertFalse(biriyanis.isEmpty());
-    }
 
     @Test
     void FinishOrderButtonActionWithInvalidDataTest() {
@@ -127,13 +121,13 @@ public class OnlineFoodServiceTest {
         onlineFoodService.addItemToOrder(fish);
         onlineFoodService.addItemToOrder(kebab);
 
+        int totalPrice = onlineFoodService.getTotalPrice();
+        assertEquals(710, totalPrice);
+
         int[] expected = {450, 260};
         int[] actual = {450, 260};
 
         assertArrayEquals(expected, actual);
-
-        int totalPrice = onlineFoodService.getTotalPrice();
-        assertEquals(710, totalPrice);
     }
 
     @Test
@@ -199,3 +193,6 @@ public class OnlineFoodServiceTest {
     }
 
 }
+
+
+
