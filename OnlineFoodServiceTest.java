@@ -1,7 +1,10 @@
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -157,6 +160,42 @@ public class OnlineFoodServiceTest {
 
         assertLinesMatch(expectedLines, actualLines);
 
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {160, 250, 380, 450})
+    void FoodPricePositiveTest(int price) {
+        assertTrue(price > 0);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "160, 250, 410",
+            "20, 20, 40"
+    })
+    void TotalPriceCalculationTest(int price1, int price2, int total) {
+        assertEquals(total, price1 + price2);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/customerInfo.csv", numLinesToSkip = 0)
+    void CustomerInfoTest(String name, String address, String mobileNumber) {
+        assertNotNull(name);
+        assertNotNull(address);
+        assertTrue(mobileNumber.contains("+880"));
+    }
+
+    static Stream<Arguments> provideNumbers() {
+        return Stream.of(
+                Arguments.of(160, 250, 410),
+                Arguments.of(450, 200, 650)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNumbers")
+    void TotalofPriceTest(int cost1, int cost2, int total) {
+        assertEquals(total, cost1 + cost2);
     }
 
 }
