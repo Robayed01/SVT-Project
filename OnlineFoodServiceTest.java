@@ -109,4 +109,54 @@ public class OnlineFoodServiceTest {
             onlineFoodService.clearOrderButtonAction();
         });
     }
+
+    @Test
+    void TotalPriceInitialStateTest() {
+        int totalPrice = onlineFoodService.getTotalPrice();
+        assertEquals(0, totalPrice);
+    }
+
+    @Test
+    void TotalPriceAfterAddingItemsTest() {
+        FoodName fish = new FoodName(6, "Rupchada Fish", 450);
+        FoodName kebab = new FoodName(4, "Chicken Kebab", 260);
+
+        onlineFoodService.addItemToOrder(fish);
+        onlineFoodService.addItemToOrder(kebab);
+
+        int[] expected = {450, 260};
+        int[] actual = {450, 260};
+
+        assertArrayEquals(expected, actual);
+
+        int totalPrice = onlineFoodService.getTotalPrice();
+        assertEquals(710, totalPrice);
+    }
+
+    @Test
+    void OrderSummaryInitialStateTest() {
+        String orderSummary = onlineFoodService.getOrderSummary();
+        assertTrue(orderSummary.isEmpty());
+    }
+
+    @Test
+    void OrderSummaryAfterAddingItemsTest() {
+        FoodName biriyani = new FoodName(1, "Chicken Biriyani", 160);
+        FoodName kebab = new FoodName(3, "Beef Kebab", 380);
+
+        onlineFoodService.addItemToOrder(biriyani);
+        onlineFoodService.addItemToOrder(kebab);
+
+        String orderSummary = onlineFoodService.getOrderSummary();
+        assertTrue(orderSummary.contains("Chicken Biriyani - Tk160"));
+        assertTrue(orderSummary.contains("Beef Kebab - Tk380"));
+        assertTrue(orderSummary.contains("Total Price: Tk540"));
+
+        List<String> expectedLines = List.of("Chicken Biriyani", "Beef Kebab", "Total: Tk450");
+        List<String> actualLines = List.of("Chicken Biriyani", "Beef Kebab", "Total: Tk450");
+
+        assertLinesMatch(expectedLines, actualLines);
+
+    }
+
 }

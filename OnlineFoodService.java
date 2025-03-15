@@ -10,8 +10,6 @@ public class OnlineFoodService extends JFrame {
 
     public OnlineFoodService() {
 
-        JOptionPane.showMessageDialog(this, "Welcome to the Yummy Deshi Food!");
-
         setTitle("Yummy Deshi Food Restaurant");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
